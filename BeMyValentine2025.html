@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine, Shanté?</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffebee;
+            color: #d32f2f;
+            text-align: center;
+            padding: 50px;
+            overflow: auto; /* Allow scrolling */
+            position: relative;
+            min-height: 150vh; /* Make the page taller for scrolling */
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+            position: relative;
+            z-index: 2; /* Ensure text is above floating elements */
+        }
+        p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            animation: fadeIn 3s ease-in-out;
+            position: relative;
+            z-index: 2; /* Ensure text is above floating elements */
+        }
+        .button {
+            background-color: #d32f2f;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            animation: pulse 2s infinite;
+            position: relative;
+            z-index: 2; /* Ensure buttons are above floating elements */
+        }
+        .button:hover {
+            background-color: #b71c1c;
+        }
+        .button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .floating {
+            position: absolute;
+            font-size: 2em;
+            animation: pulse 2s infinite ease-in-out;
+            z-index: 1; /* Ensure floating elements stay behind content */
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        img {
+            width: 300px;
+            height: 300px; /* Fixed size for the image */
+            object-fit: cover; /* Ensure the image maintains aspect ratio */
+            border-radius: 10px;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+            position: relative;
+            z-index: 2; /* Ensure the image is above floating elements */
+        }
+        .response-message {
+            font-size: 1.5em;
+            margin-top: 20px;
+            animation: fadeIn 2s ease-in-out;
+            display: none; /* Hidden by default */
+        }
+    </style>
+</head>
+<body>
+    <h1>Will You Be My Valentine, Shanté?</h1>
+    <img src="https://i.postimg.cc/brcdXB6C/IMG-8387.jpg" alt="Our Photo">
+    <p>Hey there pretty girl! Entombo is asking you to be his Valentine. Will you?</p>
+    <form id="valentine-form" action="https://formsubmit.co/tombo2325@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Shanté's Valentine Response!">
+        <input type="hidden" name="response" id="response-input"> <!-- Hidden input for response -->
+        <button type="button" onclick="submitForm('Yes')" class="button" id="yes-button">Yes!</button>
+        <button type="button" onclick="submitForm('No')" class="button" id="no-button">No</button>
+    </form>
+
+    <!-- Response Messages -->
+    <div id="yes-message" class="response-message">
+        Awesome! Entombo will be in touch about plans for the 14th. See you then!
+    </div>
+    <div id="no-message" class="response-message">
+        Oh no! Entombo will be sad to hear this, but no hard feelings. Still have yourself a wonderful Valentine's Day!
+    </div>
+
+    <!-- Background Music -->
+    <audio autoplay loop>
+        <source src="YOUR_DIRECT_MP3_LINK_HERE" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Floating Elements (Hearts, Teddy Bears, Roses, Kisses) -->
+    <script>
+        const floatingIcons = ['❤️', '🧸', '💋', '🌹']; // Heart, teddy bear, kiss, rose
+        const iconSize = 40; // Size of each icon in pixels
+        const iconSpacing = 50; // Spacing between icons in pixels
+        let iconIndex = 0; // Tracks the current icon in the sequence
+
+        // Create floating elements around the border
+        function createBorderIcons() {
+            const screenWidth = window.innerWidth;
+            const screenHeight = document.body.scrollHeight; // Use full scrollable height
+
+            // Top border
+            for (let x = 0; x < screenWidth; x += iconSpacing) {
+                createIcon(x, 0);
+            }
+
+            // Right border
+            for (let y = 0; y < screenHeight; y += iconSpacing) {
+                createIcon(screenWidth, y);
+            }
+
+            // Bottom border
+            for (let x = screenWidth; x > 0; x -= iconSpacing) {
+                createIcon(x, screenHeight);
+            }
+
+            // Left border
+            for (let y = screenHeight; y > 0; y -= iconSpacing) {
+                createIcon(0, y);
+            }
+        }
+
+        // Create a single icon at the specified position
+        function createIcon(x, y) {
+            const icon = document.createElement('div');
+            icon.classList.add('floating');
+            icon.innerHTML = floatingIcons[iconIndex % floatingIcons.length]; // Cycle through icons
+            icon.style.left = `${x}px`;
+            icon.style.top = `${y}px`;
+            icon.style.transform = 'translate(-50%, -50%)'; // Center the icon
+            document.body.appendChild(icon);
+            iconIndex++; // Move to the next icon in the sequence
+        }
+
+        // Handle form submission
+        function submitForm(response) {
+            const yesButton = document.getElementById('yes-button');
+            const noButton = document.getElementById('no-button');
+            const yesMessage = document.getElementById('yes-message');
+            const noMessage = document.getElementById('no-message');
+            const responseInput = document.getElementById('response-input');
+
+            // Disable buttons to prevent multiple submissions
+            yesButton.disabled = true;
+            noButton.disabled = true;
+
+            // Set the response value in the hidden input
+            responseInput.value = response;
+
+            // Show the appropriate message
+            if (response === 'Yes') {
+                yesMessage.style.display = 'block';
+                noMessage.style.display = 'none';
+            } else {
+                noMessage.style.display = 'block';
+                yesMessage.style.display = 'none';
+            }
+
+            // Submit the form data to FormSubmit
+            fetch('https://formsubmit.co/tombo2325@gmail.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    _subject: "Shanté's Valentine Response!",
+                    response: response,
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Form submitted successfully!');
+                } else {
+                    console.error('Form submission failed.');
+                }
+            })
+            .catch(error => console.error('Error submitting form:', error));
+        }
+
+        // Create the border icons when the page loads
+        createBorderIcons();
+    </script>
+</body>
+</html>
